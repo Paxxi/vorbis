@@ -31,6 +31,18 @@ extern "C"
 
 #include "codec.h"
 
+#if !defined(EXPORT_ENC)
+#if defined(_WIN32)
+#if defined(vorbisenc_EXPORTS)
+#define EXPORT_ENC __declspec(dllexport)
+#else
+#define EXPORT_ENC __declspec(dllimport)
+#endif
+#else
+#define EXPORT_ENC extern
+#endif
+#endif
+
 /**
  * This is the primary function within libvorbisenc for setting up managed
  * bitrate modes.
@@ -57,7 +69,7 @@ extern "C"
  * \retval OV_EINVAL  Invalid setup request, eg, out of range argument.
  * \retval OV_EIMPL   Unimplemented mode; unable to comply with bitrate request.
  */
-extern int vorbis_encode_init(vorbis_info *vi,
+EXPORT_ENC int vorbis_encode_init(vorbis_info *vi,
                               long channels,
                               long rate,
 
@@ -94,7 +106,7 @@ extern int vorbis_encode_init(vorbis_info *vi,
  * \retval OV_EINVAL   Invalid setup request, eg, out of range argument.
  * \retval OV_EIMPL    Unimplemented mode; unable to comply with bitrate request.
  */
-extern int vorbis_encode_setup_managed(vorbis_info *vi,
+EXPORT_ENC int vorbis_encode_setup_managed(vorbis_info *vi,
                                        long channels,
                                        long rate,
 
@@ -126,7 +138,7 @@ extern int vorbis_encode_setup_managed(vorbis_info *vi,
  * \retval  OV_EINVAL  Invalid setup request, eg, out of range argument.
  * \retval  OV_EIMPL   Unimplemented mode; unable to comply with quality level request.
  */
-extern int vorbis_encode_setup_vbr(vorbis_info *vi,
+EXPORT_ENC int vorbis_encode_setup_vbr(vorbis_info *vi,
                                   long channels,
                                   long rate,
 
@@ -155,7 +167,7 @@ extern int vorbis_encode_setup_vbr(vorbis_info *vi,
  * \retval OV_EINVAL   Invalid setup request, eg, out of range argument.
  * \retval OV_EIMPL    Unimplemented mode; unable to comply with quality level request.
  */
-extern int vorbis_encode_init_vbr(vorbis_info *vi,
+EXPORT_ENC int vorbis_encode_init_vbr(vorbis_info *vi,
                                   long channels,
                                   long rate,
 
@@ -189,7 +201,7 @@ extern int vorbis_encode_init_vbr(vorbis_info *vi,
  * initialize the high-level encoding setup
  *
  */
-extern int vorbis_encode_setup_init(vorbis_info *vi);
+EXPORT_ENC int vorbis_encode_setup_init(vorbis_info *vi);
 
 /**
  * This function implements a generic interface to miscellaneous encoder
@@ -217,7 +229,7 @@ extern int vorbis_encode_setup_init(vorbis_info *vi);
  *
  * \retval OV_EIMPL   Unimplemented or unknown request
  */
-extern int vorbis_encode_ctl(vorbis_info *vi,int number,void *arg);
+EXPORT_ENC int vorbis_encode_ctl(vorbis_info *vi,int number,void *arg);
 
 /**
  * \deprecated This is a deprecated interface. Please use vorbis_encode_ctl()
