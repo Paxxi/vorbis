@@ -65,5 +65,6 @@ add_subdirectory(lib)
 configure_pkg_config_file(vorbis.pc.in)
 configure_pkg_config_file(vorbisenc.pc.in)
 configure_pkg_config_file(vorbisfile.pc.in)
-
-install(FILES vorbis.pc vorbisenc.pc vorbisfile.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+if(!MSVC)
+	install(FILES vorbis.pc vorbisenc.pc vorbisfile.pc DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
+endif()
